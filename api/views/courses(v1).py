@@ -14,7 +14,7 @@ from rest_framework.views import APIView
 from rest_framework.versioning import URLPathVersioning
 #(URLPathVersioning: 这个方案要求客户端指定版本作为URL路径的一部分。)
 from rest_framework.pagination import PageNumberPagination
-from api.serializers.course import CourseModelSerializer,DegreeCourseModelSerializer
+from api.serializers.course import CourseModleSerialzer,DegreeCourseModelSerializer
 from api.utils.response import BaseResponse
 # Create your views here.
 
@@ -71,7 +71,7 @@ class CoursesView(APIView):
             page = PageNumberPagination()
             course_list = page.paginate_queryset(queryset,request,self)
             # 分页之后的结果执行序列化
-            ser = CourseModelSerializer(instance=course_list, many=True)
+            ser = CourseModleSerialzer(instance=course_list, many=True)
             ret.data = ser.data
         except Exception as e:
             ret.code = 500
@@ -84,7 +84,7 @@ class CourseDetailView(APIView):
         response = {'code': 1000, 'data': None, 'error': None}
         try:
             course = models.Course.objects.get(id=pk)
-            ser = CourseModelSerializer(instance=course)
+            ser = CourseModleSerialzer(instance=course)
             response['data'] = ser.data
         except Exception as e:
             response['code'] = 500
